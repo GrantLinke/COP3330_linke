@@ -30,7 +30,7 @@ class ShapeTest {
 
     @Test
     public void testTriangleArea(){
-        Shape2D shape = new Triangle(100, 100);
+        Shape2D shape = new Triangle(10, 10);
         assertEquals(50, shape.getArea());
     }
 
