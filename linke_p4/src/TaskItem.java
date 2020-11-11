@@ -4,12 +4,14 @@ public class TaskItem
     private String title;
     private String desc;
     private Date dueDate;
+    private boolean completed;
 
-    public TaskItem(String title, String desc, Date dueDate)
+    public TaskItem(String title, String desc, Date dueDate, boolean completed)
     {
         this.title = title;
         this.desc = desc;
         this.dueDate = dueDate;
+        this.completed = completed;
     }
 
     public TaskItem()
