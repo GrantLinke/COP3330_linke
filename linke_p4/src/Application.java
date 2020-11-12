@@ -122,6 +122,7 @@ public class Application
                 return 6;
             case 7:
                 taskList.saveList();
+                return 7;
             case 8:
                 System.out.println("Returning to main menu.");
                 return 8;

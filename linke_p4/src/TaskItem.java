@@ -1,12 +1,16 @@
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.InputMismatchException;
+import java.util.Scanner;
+
 public class TaskItem
 {
     private String title;
     private String desc;
-    private Date dueDate;
-    private boolean completed;
+    private LocalDate dueDate;
+    private boolean completed = false;
+    protected Scanner input = new Scanner(System.in);
 
-    public TaskItem(String title, String desc, Date dueDate, boolean completed)
+    public TaskItem(String title, String desc, LocalDate dueDate, boolean completed)
     {
         this.title = title;
         this.desc = desc;
@@ -19,26 +23,53 @@ public class TaskItem
 
     }
 
-    public void setTitle(String title) {
+    public void setTitle() {
+        String title;
+        while (true) {
+            try {
+                System.out.print("Please enter a title for the task: ");
+                title = input.nextLine();
+                if (title.length() < 1){
+                    throw new InputMismatchException();
+                }
+                this.title = title;
+                break;
+            }catch(IllegalArgumentException e){
+                System.out.println("Warning: Invalid input. Please try again.");
+            }catch(InputMismatchException e){
+                System.out.println("Warning: Invalid input. Please try again.");
+            }
+        }
         this.title = title;
     }
 
-    public void setDesc(String desc) {
+    public void setDesc() {
+        String desc;
+        System.out.print("(Optional) Please enter a description for the task: ");
+        desc = input.nextLine();
         this.desc = desc;
     }
 
-    public void setDueDate(Date dueDate) {
-        Date today = new Date();
-        today.setHours(0);
-        if (today.before(dueDate) || dueDate.toString().length() < 10)
-        {
-            throw new IllegalArgumentException("Warning: Invalid date entered.");
+    public void setDueDate() {
+        String userIn;
+        LocalDate today = java.time.LocalDate.now();
+        while (true) {
+            try {
+                System.out.print("Please enter a due date [YYYY-MM-DD]: ");
+                userIn = input.nextLine();
+                LocalDate dueDate = LocalDate.parse(userIn);
+                if (today.isAfter(dueDate) || userIn.length() < 10) {
+                    throw new IllegalArgumentException("Warning: Invalid date entered.");
+                }
+                this.dueDate = dueDate;
+                break;
+            }catch(IllegalArgumentException e){
+                System.out.println("Invalid data. Please try again.");
+            }
         }
-        this.dueDate = dueDate;
     }
 
-    @Override
-    public String toString()
+    public String toStringDisplay()
     {
         if (!completed) {
             return "[" + dueDate.toString() + "] " + this.title + ": " + this.desc;
@@ -47,5 +78,11 @@ public class TaskItem
         else{
             return "*** [" + dueDate.toString() + "] " + this.title + ": " + this.desc;
         }
+    }
+
+    @Override
+    public String toString()
+    {
+        return dueDate.toString() + " " + this.title + " " + this.desc;
     }
 }
