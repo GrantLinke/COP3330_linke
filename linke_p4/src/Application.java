@@ -47,7 +47,7 @@ public class Application
         {
             case 1:
                 TaskList taskList = new TaskList();
-                System.out.println("New task list has been created");
+                System.out.println("New task list has been created.");
                 listOperationMenuPrompt(taskList);
                 break;
             case 2:

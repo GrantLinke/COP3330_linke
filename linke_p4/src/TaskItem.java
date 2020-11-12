@@ -36,4 +36,16 @@ public class TaskItem
         }
         this.dueDate = dueDate;
     }
+
+    @Override
+    public String toString()
+    {
+        if (!completed) {
+            return "[" + dueDate.toString() + "] " + this.title + ": " + this.desc;
+        }
+
+        else{
+            return "*** [" + dueDate.toString() + "] " + this.title + ": " + this.desc;
+        }
+    }
 }
