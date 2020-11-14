@@ -4,17 +4,18 @@ import java.util.Scanner;
 
 public class TaskItem
 {
-    private String title;
-    private String desc;
-    private LocalDate dueDate;
-    private boolean completed = false;
+    protected String title;
+    protected String desc = " ";
+    protected LocalDate dueDate;
+    protected boolean completed = false;
     protected Scanner input = new Scanner(System.in);
 
-    public TaskItem(String title, String desc, LocalDate dueDate, boolean completed)
+    public TaskItem(String dueDate, String title, String desc, boolean completed)
     {
-        this.title = title;
+        setTitleVar(title);
         this.desc = desc;
-        this.dueDate = dueDate;
+        LocalDate date = LocalDate.parse(dueDate);
+        setDueDateVar(date);
         this.completed = completed;
     }
 
@@ -43,11 +44,33 @@ public class TaskItem
         this.title = title;
     }
 
-    public void setDesc() {
-        String desc;
-        System.out.print("(Optional) Please enter a description for the task: ");
-        desc = input.nextLine();
+    public void setDescVar(String desc) {
         this.desc = desc;
+    }
+
+    public void setDueDateVar(LocalDate dueDate){
+        LocalDate today = java.time.LocalDate.now();
+            if (today.isAfter(dueDate)){
+                throw new IllegalArgumentException();
+            }
+        this.dueDate = dueDate;
+    }
+
+    public void setTitleVar(String title){
+        if (title.length() < 1)
+        {
+            throw new IllegalArgumentException();
+        }
+        this.title = title;
+    }
+
+    protected void setCompleted(boolean b) {
+        this.completed = b;
+    }
+
+    public void setDesc(){
+        System.out.print("(Optional) Please enter a description for the task: ");
+        setDescVar(input.nextLine());
     }
 
     public void setDueDate() {
@@ -84,5 +107,23 @@ public class TaskItem
     public String toString()
     {
         return dueDate.toString() + " " + this.title + " " + this.desc;
+    }
+
+    protected boolean getCompleted()
+    {
+        return this.completed;
+    }
+
+    protected String getTitle()
+    {
+        return this.title;
+    }
+
+    protected String getDesc()
+    {
+        return this.desc;
+    }
+    protected LocalDate getDueDate(){
+        return this.dueDate;
     }
 }

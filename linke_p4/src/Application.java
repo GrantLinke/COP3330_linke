@@ -52,16 +52,20 @@ public class Application
                 break;
             case 2:
                 System.out.print("Enter the filename to load: ");
-                loadFile();
+                loadFilePrompt();
                 break;
             case 3:
                 break;
         }
     }
 
-    private static void loadFile()
+    private static void loadFilePrompt()
     {
-
+        String userIn;
+        userIn = input.nextLine();
+        userIn = input.nextLine();
+        TaskList t = new TaskList();
+        t.loadFile(userIn);
     }
 
     private static void listOperationMenuPrompt(TaskList taskList)
@@ -112,22 +116,32 @@ public class Application
                 taskList.editItem();
                 return 3;
             case 4:
-                taskList.removeItem();
+                taskList.removeItemDisplay();
                 return 4;
             case 5:
-                taskList.markItem(true);
+                taskList.markItemDisplay(true);
                 return 5;
             case 6:
-                taskList.markItem(false);
+                taskList.markItemDisplay(false);
                 return 6;
             case 7:
-                taskList.saveList();
+                saveListPrompt(taskList);
                 return 7;
             case 8:
                 System.out.println("Returning to main menu.");
                 return 8;
         }
         return 8;
+    }
+
+    private static void saveListPrompt(TaskList taskList)
+    {
+        String userIn;
+        System.out.println("Please enter the name of the file: ");
+        userIn = input.nextLine();
+        userIn = input.nextLine();
+        taskList.saveList(userIn);
+
     }
 
 }
