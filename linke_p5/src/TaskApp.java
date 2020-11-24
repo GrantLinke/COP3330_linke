@@ -1,5 +1,7 @@
 import java.util.Scanner;
 
+import static java.lang.System.exit;
+
 public class TaskApp
 {
     static Scanner input = new Scanner(System.in);
@@ -48,6 +50,7 @@ public class TaskApp
                 ContactApp c = new ContactApp();
                 c.displayInitialPrompt();
             case 3:
+                exit(1);
                 break;
         }
     }
@@ -99,6 +102,7 @@ public class TaskApp
                 loadFilePrompt();
                 break;
             case 3:
+                displayFirstPrompt();
                 break;
         }
     }
