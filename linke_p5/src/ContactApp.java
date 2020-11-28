@@ -46,8 +46,9 @@ public class ContactApp
                 contactMenuPrompt(contactList);
                 break;
             case 2:
+                ContactList contactList2 = new ContactList();
                 System.out.print("Enter the filename to load: ");
-                loadFile();
+                loadFile(contactList2);
                 break;
             case 3:
                 TaskApp.displayFirstPrompt();
@@ -55,12 +56,14 @@ public class ContactApp
         }
     }
 
-    private void loadFile()
+    private void loadFile(ContactList contactList)
     {
-
+        String fileName = input.nextLine();
+        fileName = input.nextLine();
+        contactList.loadFile(fileName);
     }
 
-    private void contactMenuPrompt(ContactList contactList)
+    public void contactMenuPrompt(ContactList contactList)
     {
         int userIn = 0;
         while (true) {
@@ -110,10 +113,10 @@ public class ContactApp
                 editItemPrompt(contactList);
                 break;
             case 4:
-                //removeItemDisplay();
+                removeItemDisplay(contactList);
                 break;
             case 5:
-                //saveListPrompt(contactList);
+                saveListPrompt(contactList);
                 break;
             case 6:
                 System.out.println("Returning to main menu.");
@@ -122,15 +125,68 @@ public class ContactApp
         contactMenuPrompt(contactList);
     }
 
+    private void saveListPrompt(ContactList contactList) {
+        String userIn = "defaultContacts.txt";
+        while(true) {
+            try {
+                System.out.print("Please enter a filename to save as: ");
+                userIn = input.nextLine();
+                userIn = input.nextLine();
+                if (!userIn.contains(".txt")) {
+                    throw new IllegalArgumentException();
+                }
+                break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("Please include a file extension (.txt) at the end of your filename.");
+            }
+        }
+        contactList.save(userIn);
+    }
+
+    private void removeItemDisplay(ContactList contactList)
+    {
+        int userIn;
+        if (validCount(contactList)) {
+            while (true) {
+                try {
+                    contactList.viewList();
+                    System.out.println("Which task will you remove?");
+                    userIn = input.nextInt();
+                    if (userIn > contactList.contactList.size() - 1 || userIn < 0)
+                    {
+                        throw new IllegalArgumentException();
+                    }
+                    break;
+                }catch(IllegalArgumentException e){
+                    System.out.println("Invalid input. Please try again.");
+                }
+            }
+            contactList.removeItem(userIn);
+        }
+    }
+
+    private boolean validCount(ContactList contactList)
+    {
+        if (contactList.contactList.size() == 0)
+        {
+            System.out.println("No current contacts.");
+            return false;
+        }
+        return true;
+    }
+
     private void editItemPrompt(ContactList contactList) {
-        contactList.viewList();
-        System.out.println("");
-        System.out.print("Which contact will you edit: ");
-        try {
-        int userIn = input.nextInt();
-        editItem(contactList, userIn);
-        }catch(IndexOutOfBoundsException e){
-            System.out.println("Invalid number entered.");
+        while(true) {
+            contactList.viewList();
+            System.out.println("");
+            System.out.print("Which contact will you edit: ");
+            try {
+                int userIn = input.nextInt();
+                editItem(contactList, userIn);
+                break;
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println("Invalid number entered.");
+            }
         }
     }
 
@@ -184,7 +240,7 @@ public class ContactApp
                 c.setFName(userIn);
                 break;
             } catch (IllegalArgumentException e) {
-                System.out.println();
+                System.out.println("Invalid name input. Please try again.");
             }
         }
     }
@@ -197,7 +253,7 @@ public class ContactApp
                 c.setLName(userIn);
                 break;
             }catch(IllegalArgumentException e){
-                System.out.println();
+                System.out.println("Invalid name input. Please try again.");
             }
         }
     }
@@ -210,7 +266,7 @@ public class ContactApp
                 c.setPhoneNum(userIn);
                 break;
             }catch(IllegalArgumentException e){
-                System.out.println();
+                System.out.println("Invalid phone number input. Please try again.");
             }
         }
     }
@@ -223,7 +279,7 @@ public class ContactApp
                 c.setEmail(userIn);
                 break;
             }catch(IllegalArgumentException e){
-                System.out.println();
+                System.out.println("Invalid email input. Please try again.");
             }
         }
     }

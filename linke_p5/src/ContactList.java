@@ -1,5 +1,9 @@
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Formatter;
 import java.util.List;
+import java.util.Scanner;
 
 public class ContactList
 {
@@ -16,6 +20,51 @@ public class ContactList
             {
                 System.out.println(i + ") " + contactList.get(i).toStringDisplay());
             }
+        }
+    }
+
+    public void removeItem(int userIn) {
+        contactList.remove(userIn);
+    }
+
+    public void save(String filename)
+    {
+        try(Formatter output = new Formatter(filename))
+        {
+            output.format("contacts%n");
+            for(int i = 0; i < contactList.size(); i++)
+            {
+                ContactItem c = contactList.get(i);
+                output.format("%s%n", c.getFName());
+                output.format("%s%n", c.getLName());
+                output.format("%s%n", c.getPhoneNum());
+                output.format("%s%n", c.getEmail());
+            }
+        }catch(IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void loadFile(String fileName) {
+        try(Scanner fileIn = new Scanner(Paths.get(fileName))){
+            String fileHead = fileIn.nextLine();
+            if(fileHead.equalsIgnoreCase("contacts"))
+            {
+                while(fileIn.hasNext())
+                {
+                    String fName = fileIn.nextLine();
+                    String lName = fileIn.nextLine();
+                    String phoneNum = fileIn.nextLine();
+                    String email = fileIn.nextLine();
+
+                    ContactItem c = new ContactItem(fName, lName, phoneNum, email);
+                    this.contactList.add(c);
+                }
+            }
+            ContactApp c = new ContactApp();
+            c.contactMenuPrompt(this);
+        }catch (IOException e){
+            System.out.println("Filename not found.");
         }
     }
 }
