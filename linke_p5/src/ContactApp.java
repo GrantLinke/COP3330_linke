@@ -61,6 +61,7 @@ public class ContactApp
         String fileName = input.nextLine();
         fileName = input.nextLine();
         contactList.loadFile(fileName);
+        contactMenuPrompt(contactList);
     }
 
     public void contactMenuPrompt(ContactList contactList)
@@ -218,7 +219,7 @@ public class ContactApp
         System.out.print("Please enter new email address: ");
         c2.setEmail(getEmail());
 
-        contactList.editItem(c1, c2);
+        c1.editItem(c1, c2);
     }
 
     private static void addItem(ContactList contactList)

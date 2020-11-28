@@ -43,38 +43,73 @@ class ContactItemTest
     @Test
     public void editingFailsWithAllBlankValues(){
         assertThrows(IllegalArgumentException.class, ()->
-        {ContactItem c = new ContactItem("try", "this", "I", "guess");});
+        {   ContactItem c = new ContactItem("try", "this", "I", "guess");
+            ContactItem c2 = new ContactItem("", "", "", "");
+            ContactList contactList = new ContactList();
+            contactList.contactList.add(c);
+            c.editItem(c, c2);
+        });
     }
 
     @Test
     public void editingSucceedsWithBlankEmail(){
-        assertDoesNotThrow(() -> {ContactItem c = new
-                ContactItem("Good", "Name", "justForTest", "yeah");});
+        ContactItem c = new ContactItem("try", "this", "I", "guess");
+        ContactItem c2 = new ContactItem("test", "test", "test", "");
+        assertDoesNotThrow(()-> { c.editItem(c, c2); });
+        assertEquals(c.getEmail(), c2.getEmail());
+        assertEquals(c.getFName(), c2.getFName());
+        assertEquals(c.getLName(), c2.getLName());
+        assertEquals(c.getPhoneNum(), c2.getPhoneNum());
     }
 
     @Test
     public void editingSucceedsWithBlankFirstName(){
-
+        ContactItem c = new ContactItem("try", "this", "I", "guess");
+        ContactItem c2 = new ContactItem("", "test", "test", "test");
+        assertDoesNotThrow(()-> { c.editItem(c, c2); });
+        assertEquals(c.getEmail(), c2.getEmail());
+        assertEquals(c.getFName(), c2.getFName());
+        assertEquals(c.getLName(), c2.getLName());
+        assertEquals(c.getPhoneNum(), c2.getPhoneNum());
     }
 
     @Test
     public void editingSucceedsWithBlankLastName(){
-
+        ContactItem c = new ContactItem("try", "this", "I", "guess");
+        ContactItem c2 = new ContactItem("test", "", "test", "test");
+        assertDoesNotThrow(()-> { c.editItem(c, c2); });
+        assertEquals(c.getEmail(), c2.getEmail());
+        assertEquals(c.getFName(), c2.getFName());
+        assertEquals(c.getLName(), c2.getLName());
+        assertEquals(c.getPhoneNum(), c2.getPhoneNum());
     }
 
     @Test
     public void editingSucceedsWithBlankPhone(){
-
+        ContactItem c = new ContactItem("try", "this", "I", "guess");
+        ContactItem c2 = new ContactItem("test", "test", "", "test");
+        assertDoesNotThrow(()-> { c.editItem(c, c2); });
+        assertEquals(c.getEmail(), c2.getEmail());
+        assertEquals(c.getFName(), c2.getFName());
+        assertEquals(c.getLName(), c2.getLName());
+        assertEquals(c.getPhoneNum(), c2.getPhoneNum());
     }
 
     @Test
     public void editingSucceedsWithNonBlankValues(){
-
+        ContactItem c = new ContactItem("try", "this", "I", "guess");
+        ContactItem c2 = new ContactItem("test", "test", "test", "test");
+        assertDoesNotThrow(()-> { c.editItem(c, c2); });
+        assertEquals(c.getEmail(), c2.getEmail());
+        assertEquals(c.getFName(), c2.getFName());
+        assertEquals(c.getLName(), c2.getLName());
+        assertEquals(c.getPhoneNum(), c2.getPhoneNum());
     }
 
     @Test
     public void testToString(){
-
+        ContactItem c = new ContactItem("First", "Last", "Phone Number", "Email");
+        assertEquals(c.toString(), "Name: First Last\nPhone: Phone Number\nEmail: Email");
     }
 
 }

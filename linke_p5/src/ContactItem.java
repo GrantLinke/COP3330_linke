@@ -6,6 +6,13 @@ public class ContactItem
     private String email;
 
     public ContactItem(String fName, String lName, String phoneNum, String email){
+        if (email.length() < 1
+        && fName.length() < 1
+        && lName.length() < 1
+        && phoneNum.length() < 1)
+        {
+            throw new IllegalArgumentException();
+        }
         this.fName = fName;
         this.lName = lName;
         this.phoneNum = phoneNum;
@@ -47,9 +54,24 @@ public class ContactItem
     public String getEmail() {
         return email;
     }
-
-    public String toStringDisplay()
+    @Override
+    public String toString()
     {
-        return "Name: " + fName + " " + lName + "\nPhone: " + phoneNum + "\nEmail:" + email;
+        return "Name: " + fName + " " + lName + "\nPhone: " + phoneNum + "\nEmail: " + email;
     }
+
+
+    public void editItem(ContactItem c1, ContactItem c2) {
+        if (c2.getFName().length() < 1
+                && c2.getLName().length() < 1
+                && c2.getEmail().length() < 1
+                && c2.getPhoneNum().length() < 1) {
+            throw new IllegalArgumentException();
+        }
+        c1.setFName(c2.getFName());
+        c1.setLName(c2.getLName());
+        c1.setPhoneNum(c2.getPhoneNum());
+        c1.setEmail(c2.getEmail());
+    }
+
 }
