@@ -62,11 +62,16 @@ public class ContactItem
 
 
     public void editItem(ContactItem c1, ContactItem c2) {
-        if (c2.getFName().length() < 1
-                && c2.getLName().length() < 1
-                && c2.getEmail().length() < 1
-                && c2.getPhoneNum().length() < 1) {
-            throw new IllegalArgumentException();
+        try {
+            if (c2.getFName().length() < 1
+                    && c2.getLName().length() < 1
+                    && c2.getEmail().length() < 1
+                    && c2.getPhoneNum().length() < 1) {
+                throw new IllegalArgumentException();
+            }
+        }catch(IllegalArgumentException e)
+        {
+            System.out.println("Invalid input. Please try again.");
         }
         c1.setFName(c2.getFName());
         c1.setLName(c2.getLName());
