@@ -67,4 +67,45 @@ public class ContactList
             System.out.println("Filename not found.");
         }
     }
+
+    public void checkValid(ContactItem c) {
+        if (c.getFName().length() < 1
+                && c.getLName().length() < 1
+                && c.getEmail().length() < 1
+                && c.getPhoneNum().length() < 1){
+            throw new IllegalArgumentException();
+        }
+        contactList.add(c);
+    }
+    public void checkValidEdit(ContactItem c) {
+        if (c.getFName().length() < 1
+                && c.getLName().length() < 1
+                && c.getEmail().length() < 1
+                && c.getPhoneNum().length() < 1) {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    public void editItem(ContactItem c1, ContactItem c2) {
+        if (c2.getFName().length() < 1
+                && c2.getEmail().length() < 1
+                && c2.getPhoneNum().length() < 1) {
+            throw new IllegalArgumentException();
+        }
+        c1.setFName(c2.getFName());
+        c1.setLName(c2.getLName());
+        c1.setPhoneNum(c2.getPhoneNum());
+        c1.setEmail(c2.getEmail());
+    }
+
+    public void addItem(String fName, String lName, String phoneNum, String email) {
+        if (fName.length() < 1
+                && lName.length() < 1
+                && email.length() < 1
+                && phoneNum.length() < 1) {
+            throw new IllegalArgumentException();
+        }
+        ContactItem c = new ContactItem(fName, lName, phoneNum, email);
+        contactList.add(c);
+    }
 }

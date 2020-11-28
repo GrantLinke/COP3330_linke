@@ -176,6 +176,12 @@ public class ContactApp
     }
 
     private void editItemPrompt(ContactList contactList) {
+        if(contactList.contactList.size() <= 0)
+        {
+            System.out.println("No current contacts.");
+            return;
+        }
+
         while(true) {
             contactList.viewList();
             System.out.println("");
@@ -197,19 +203,22 @@ public class ContactApp
         {
             throw new IndexOutOfBoundsException();
         }
-        c = contactList.contactList.get(index);
+        ContactItem c1 = contactList.contactList.get(index);
+        ContactItem c2 = new ContactItem();
 
         System.out.print("Please enter new first name: ");
-        getFirstName(c);
+        c2.setFName(getFirstName());
 
         System.out.print("Please enter new last name: ");
-        getLastName(c);
+        c2.setLName(getLastName());
 
         System.out.print("Please enter new phone number: ");
-        getPhoneNum(c);
+        c2.setPhoneNum(getPhoneNum());
 
         System.out.print("Please enter new email address: ");
-        getEmail(c);
+        c2.setEmail(getEmail());
+
+        contactList.editItem(c1, c2);
     }
 
     private static void addItem(ContactList contactList)
@@ -217,71 +226,71 @@ public class ContactApp
         ContactItem c = new ContactItem();
 
         System.out.print("Please enter first name: ");
-        getFirstName(c);
+        String fName = getFirstName();
 
         System.out.print("Please enter last name: ");
-        getLastName(c);
+        String lName = getLastName();
 
         System.out.print("Please enter phone number: ");
-        getPhoneNum(c);
+        String phoneNum = getPhoneNum();
 
         System.out.print("Please enter email address: ");
-        getEmail(c);
+        String email = getEmail();
 
-        contactList.contactList.add(c);
+        contactList.addItem(fName, lName, phoneNum, email);
     }
 
-    private static void getFirstName(ContactItem c){
+    private static String getFirstName(){
         String userIn;
         while(true) {
             try {
                 userIn = input.nextLine();
                 userIn = input.nextLine();
-                c.setFName(userIn);
                 break;
             } catch (IllegalArgumentException e) {
                 System.out.println("Invalid name input. Please try again.");
             }
         }
+        return userIn;
     }
 
-    private static void getLastName(ContactItem c){
+    private static String getLastName(){
         String userIn;
         while(true){
             try{
                 userIn = input.nextLine();
-                c.setLName(userIn);
                 break;
             }catch(IllegalArgumentException e){
                 System.out.println("Invalid name input. Please try again.");
             }
         }
+        return userIn;
     }
 
-    private static void getPhoneNum(ContactItem c){
+    private static String getPhoneNum(){
         String userIn;
         while(true){
             try{
                 userIn = input.nextLine();
-                c.setPhoneNum(userIn);
                 break;
             }catch(IllegalArgumentException e){
                 System.out.println("Invalid phone number input. Please try again.");
             }
         }
+        return userIn;
     }
 
-    private static void getEmail(ContactItem c){
+    private static String getEmail(){
         String userIn;
         while(true){
             try{
                 userIn = input.nextLine();
-                c.setEmail(userIn);
                 break;
             }catch(IllegalArgumentException e){
                 System.out.println("Invalid email input. Please try again.");
             }
         }
+        return userIn;
     }
 
 }

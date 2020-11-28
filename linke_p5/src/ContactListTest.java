@@ -6,7 +6,7 @@ class ContactListTest {
 
     @Test
     public void addingItemsIncreasesSize(){
-        
+
     }
 
     @Test
